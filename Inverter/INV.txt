@@ -1,0 +1,190 @@
+
+ 
+.include 'C:\HSpice\WorkOut\INV Test\mosistsmc180.lib'
+*.global vdd gnd in
+.param SUPPLY=1.8
+VDD vdd 0 1.8
+
+VA1 in 0 PULSE 1.8 0 .1NS 100PS 100PS .5NS 1NS
+*VA2 inA2 0 PULSE 0 1.8 0NS 100PS 100PS 10NS 20NS  
+*VA3 inA3 0 PULSE 0 1.8 0NS 100PS 100PS 25NS 50NS  
+*VA4 inA4 0 PULSE 0 1.8 0NS 100PS 100PS 10NS 20NS  
+*VA5 inA5 0 PULSE 0 1.8 0NS 100PS 100PS 20NS 40NS  
+*VA6 inA6 0 PULSE 0 1.8 0NS 100PS 100PS 15NS 30NS  
+*VA7 inA7 0 PULSE 0 1.8 0NS 100PS 100PS 25NS 50NS  
+*VA8 inA8 0 PULSE 0 1.8 0NS 100PS 100PS 20NS 40NS  
+  
+*VB1 inB1 0 PULSE 0 1.8 0NS 100PS 100PS 10NS 20NS
+*VB2 inB2 0 PULSE 0 1.8 0NS 100PS 100PS 25NS 50NS  
+*VB3 inB3 0 PULSE 0 1.8 0NS 100PS 100PS 20NS 40NS  
+*VB4 inB4 0 PULSE 0 1.8 0NS 100PS 100PS 25NS 50NS  
+*VB5 inB5 0 PULSE 0 1.8 0NS 100PS 100PS 15NS 30NS  
+*VB6 inB6 0 PULSE 0 1.8 0NS 100PS 100PS 10NS 20NS  
+*VB7 inB7 0 PULSE 0 1.8 0NS 100PS 100PS 10NS 20NS  
+*VB8 inB8 0 PULSE 0 1.8 0NS 100PS 100PS 15NS 30NS  
+
+*VC inC 0 PULSE 0 1.8 0NS 100PS 100PS 15NS 30NS
+
+*XFA8B1 
+*+inC inA1 inA2 inA3 inA4 inA5 inA6 inA7 inA8
+*+inB1 inB2 inB3 inB4 inB5 inB6 inB7 inB8 
+*+outS1 outS2 outS3 outS4 outS5 outS6 outS7 outS8 outC8
+*+FA8B
+
+*X1 inA1 VOut INV
+
+*.SUBCKT INV in out
+MPI1 vdd in out vdd PMOS L=.18u W=.72u 
+MNI1 out in gnd gnd NMOS L=.18u W=.18u
+C1 out gnd 10f
+*.ENDS
+
+*.SUBCKT INV in out
+*M1 ?? ?? ?? ?? NMOS W='N' L=2 AS='N*5' PS='2*N+10' AD='N*5' PD='2*N+10'
+*M2 ?? ?? ?? ?? PMOS W='P' L=2 AS='P*5' PS='2*P+10' AD='P*5' PD='2*P+10'
+*.ENDS
+*.SUBCKT XOR inX1 inX2 outX
+*MPX1 vdd NinX1 PX3 vdd PMOS L=.18u W=1.8u
+*MPX2 vdd inX1 PX4 vdd PMOS L=.18u W=1.8u
+*MPX3 PX3 inX2 outX vdd PMOS L=.18u W=1.8u 
+*MPX4 PX4 NinX2 outX vdd PMOS L=.18u W=1.8u 
+*MNI1 outX inX1 NI1 gnd NMOS L=.18u W=.72u
+*MNI2 outX NinX1 NI2 gnd NMOS L=.18u W=.72u
+*MNI3 NI1 inX2 gnd gnd NMOS L=.18u W=.72u
+*MNI4 NI2 NinX2 gnd gnd NMOS L=.18u W=.72u
+*XINV1 inX1 NinX1 INV 
+*XINV2 inX2 NinX2 INV
+*.ENDS
+
+*.SUBCKT AND inAN1 inAN2 outAN
+*MPAN1 vdd inAN1 NoutAN vdd PMOS L=.18u W=.9u
+*MPAN2 vdd inAN2 NoutAN vdd PMOS L=.18u W=.9u
+*MNAN1 NoutAN inAN1 AN2 gnd NMOS L=.18u W=.72u
+*MNAN2 AN2 inAN2 gnd gnd NMOS L=.18u W=.72u
+*XINV3 NoutAN outAN INV 
+*.ENDS
+
+*.SUBCKT HA inHA1 inHA2 outHAC outHAS
+*XXOR1 inHA1 inHA2 outHAS XOR
+*XAND1 inHA1 inHA2 outHAC AND
+*.ENDS
+
+*.SUBCKT OR inOR1 inOR2 outOR
+*MPOR1 vdd inOR1 OR2 vdd PMOS L=.18u W=1.8u
+*MPOR2 OR2 inOR2 NoutOR vdd PMOS L=.18u W=1.8u
+*MNOR1 NoutOR inOR1 gnd gnd NMOS L=.18u W=.36u
+*MNOR2 NoutOR inOR2 gnd gnd NMOS L=.18u W=.36u
+*XINV4 NoutOR outOR INV 
+*.ENDS
+
+*.SUBCKT FA inFA1 inFA2 inFAC outFAC outFAS
+*XHA1 inFA2 inFAC outHA1C outHA1S HA
+*XHA2 inFA1 outHA1S outHA2C outFAS HA
+*XOR1 outHA1C outHA2C outFAC OR
+*.ENDS
+
+*.SUBCKT FA8B 
+*+inFA8BC inFA8BA1 inFA8BA2 inFA8BA3 inFA8BA4 inFA8BA5 inFA8BA6 inFA8BA7 inFA8BA8 
+*+inFA8BB1 inFA8BB2 inFA8BB3 inFA8BB4 inFA8BB5 inFA8BB6 inFA8BB7 inFA8BB8 
+*+outFA8BS1 outFA8BS2 outFA8BS3 outFA8BS4 outFA8BS5 outFA8BS6 outFA8BS7 outFA8BS8 outFA8BC8
+*XFA1 inFA8BA1 inFA8BB1 inFA8BC outFA8BC1 outFA8BS1 FA
+*XFA2 inFA8BA2 inFA8BB2 outFA8BC1 outFA8BC2 outFA8BS2 FA
+*XFA3 inFA8BA3 inFA8BB3 outFA8BC2 outFA8BC3 outFA8BS3 FA
+*XFA4 inFA8BA4 inFA8BB4 outFA8BC3 outFA8BC4 outFA8BS4 FA
+*XFA5 inFA8BA5 inFA8BB5 outFA8BC4 outFA8BC5 outFA8BS5 FA
+*XFA6 inFA8BA6 inFA8BB6 outFA8BC5 outFA8BC6 outFA8BS6 FA
+*XFA7 inFA8BA7 inFA8BB7 outFA8BC6 outFA8BC7 outFA8BS7 FA
+*XFA8 inFA8BA8 inFA8BB8 outFA8BC7 outFA8BC8 outFA8BS8 FA
+*.ENDS
+ 
+
+*.measure tpdr * rising propagation delay
+*+ TRIG v(inA1) VAL='SUPPLY/2' RISE=1
+*+ TARG v(VOut) VAL='SUPPLY/2' FALL=1
+*.measure tpdf * falling propagation delay
+*+ TRIG v(inA1) VAL='SUPPLY/2' FALL=1
+*+ TARG v(VOut) VAL='SUPPLY/2' RISE=1
+*.measure tpd param='(tpdr+tpdf)/2' * average propagation delay
+*.measure trise * rise time
+*+ TRIG v(inA1) VAL='0.2 * SUPPLY' RISE=1
+*+ TARG v(VOut) VAL='0.8 * SUPPLY' RISE=1
+*.measure tfall * fall time
+*+ TRIG v(inA1) VAL='0.8 * SUPPLY' FALL=1
+*+ TARG v(VOut) VAL='0.2 * SUPPLY' FALL=1
+*.measure charge INTEGRAL I(vdd) FROM=0ns TO=60ns
+*.measure energy param='-charge * SUPPLY'
+*.measure power param='energy / 60'
+
+
+.options post=2 nomod 
+.op 
+.TRAN 1ps 1ns * transient analysis: Step end_time 
+.PROBE TRAN 
++V(in) V(out)
++I(C1) I(MPI1) I(MNI1)
++Ic=par('I(MPI1)-I(MNI1)')
++Pp=par('I(MPI1)*(V(out)-V(in))')
++Pn=par('I(MNI1)*V(out)')
++Pc=par('I(C1)*V(out)')
++Pvdd=par('I(MPI1)*V(in)')
++IntPc = integ('Pc')
++Ec=par('IntPc')
++IntPvdd = integ('Pvdd')
++Evdd=par('IntPvdd')
+.END 
+
+
+*MPI1 vdd in out vdd PMOS L=.18u W=.18u 
+*MNI1 out in gnd gnd NMOS L=.18u W=.18u
+*tpdr=-974.0631f 
+*tpdf=22.0712p  
+*tpd=10.5486p
+*trise=20.1626n  
+*tfall=-20.0643n  
+*charge=-1.0026f  
+*energy=1.8046f
+*power=30.0770a
+
+*MPI1 vdd in out vdd PMOS L=.18u W=.36u 
+*MNI1 out in gnd gnd NMOS L=.18u W=.18u
+*tpdr=3.1798p
+*tpdf=19.1579p
+*tpd=11.1688p
+*trise=20.1594n
+*tfall=-20.0577n
+*charge=-1.7607f
+*energy=3.1693f
+*power=52.8215a
+
+*MPI1 vdd in out vdd PMOS L=.18u W=.72u 
+*MNI1 out in gnd gnd NMOS L=.18u W=.36u
+*tpdr=10.6752p
+*tpdf=18.5522p
+*tpd=14.6137p
+*trise=20.1643n
+*tfall=-20.0524n
+*charge=-3.6996f
+*energy=6.6592f
+*power=110.9870a
+
+*MPI1 vdd in out vdd PMOS L=.18u W=.9u 
+*MNI1 out in gnd gnd NMOS L=.18u W=.36u
+*tpdr=12.3946p
+*tpdf=19.5813p
+*tpd=15.9879p
+*trise=20.1597n
+*tfall=-20.0486n
+*charge=-3.7513f
+*energy=6.7523f
+*power=112.5386a
+
+*MPI1 vdd in out vdd PMOS L=.18u W=1.44u 
+*MNI1 out in gnd gnd NMOS L=.18u W=.72u
+*tpdr=12.2859p
+*tpdf=20.1396p
+*tpd=16.2127p
+*trise=20.1609n
+*tfall=-20.0488n
+*charge=-6.3561f
+*energy=11.4410f
+*power=190.6830a

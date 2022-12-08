@@ -1,0 +1,26 @@
+ ****** HSPICE -- L-2016.06-SP1 win64 (Aug 24 2016) ******                      
+  Copyright (c) 1986 - 2019 by Synopsys, Inc. All Rights Reserved.              
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: Final try.sp                                                      
+  Command line options: C:\synopsys\Hspice_L-2016.06-SP1\WIN64\hspice.com -i Final try.sp -o D:\Eduction\Master\Course\VLSI\Project\HSPICE\Final Try\Final try.lis
+  lic:  
+  lic: FLEXlm: v11.2.1 
+  lic: USER:   Morteza              HOSTNAME: DESKTOP-IK24TF7 
+  lic: HOSTID: "d0df9a952afd"       PID:      8300 
+  lic: License server machine is down or not responding.  See the system adminis
+ t 
+  lic: Using FLEXlm license files: 
+  lic: 27000@HOSTNAME 
+  lic: Unable to checkout (hspice) 
+  lic:   
+  lic: License server machine is down or not responding.  See the system adminis
+ t 
+  lic: Using FLEXlm license files: 
+  lic: 27000@HOSTNAME 
+  lic: Unable to checkout (hspicewin) 
+  lic:   
+ lic: total license checkout elapse time:       18.03(s)

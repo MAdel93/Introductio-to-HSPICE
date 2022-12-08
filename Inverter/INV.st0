@@ -1,0 +1,13 @@
+****** HSPICE -- L-2016.06-SP1 win64 (Aug 24 2016) ******
+ Input File: INV.sp
+ lic:
+ lic: FLEXlm: v11.2.1
+ lic: USER:   Morteza              HOSTNAME: DESKTOP-AG68BOS
+ lic: HOSTID: "d0df9a952afd"       PID:      6768
+ lic: Using FLEXlm license file:
+ lic: 27000@DESKTOP-AG68BOS
+ lic: Checkout 1 hspice
+ lic: License/Maintenance for hspice will expire on 30-dec-2020/2019.2019
+ lic: 1(in_use)/99(total) FLOATING license(s) on SERVER 27000@DESKTOP-AG68BOS
+ lic:
+ lic: Release hspice token(s)

@@ -1,0 +1,33 @@
+* "simulator" "HSPICE" 
+* "version" "L-2016.06-SP1 win64"
+* "format" "HSP"
+* "rundate" "17:31:40 12/14/2017 "
+* "netlist" "Full Adder.sp "
+* "runtitle" ""
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ 3 =   1.5097        
++ 4 =   1.2774        
++ 5 =  15.2198n       
++ 6 =   7.6099n       
++ 7 =   5.0733n       
++ 8 =   1.8000        
++ 9 = 424.9642m       
++ 10 =   1.3133        
++ 11 =   1.2283        
++ 12 = 139.4214n       
++ 13 =  92.9476n       
++ 14 =  46.4738n       
++ 15 =  28.1093f       
++ 16 =   1.8000        
++ a =   5.0000        
++ b =   5.0000        
++ c =   5.0000        
++ cout =   0.            
++ sum =   0.            
++ vdd =   1.8000        
+***   END: Saved Operating Point ***                     
